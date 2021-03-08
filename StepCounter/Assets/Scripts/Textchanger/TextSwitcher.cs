@@ -7,11 +7,16 @@ public class TextSwitcher : MonoBehaviour
 {
     public Text talkText;
 
+    //Needs to be changed to the value of the trophy
     private int stepsLeft = 1000;
+
+    //The imported steps form the pedometer script
     private int pedometerSteps;
+
+    bool stepsText = true;
+
+
     public Pedometer pedometer;
-
-
 
 
     // Start is called before the first frame update
@@ -44,6 +49,33 @@ public class TextSwitcher : MonoBehaviour
 
     private void ChangeText()
     {
-        talkText.text = "Nog " + stepsLeft + " stappen over";
+        StartCoroutine(TextTimer());
+
+        //Works with boolean
+        if(stepsText == true) 
+        { 
+            talkText.text = "Nog " + stepsLeft + " stappen over"; 
+        }
+        if(stepsText == false)
+        {
+            talkText.text = "Ga zo door!";
+        }
+
+        IEnumerator TextTimer()
+        { 
+            //Switch from boolean every 5 seconds
+            if(stepsText == true)
+            {
+                yield return new WaitForSeconds(5f);
+                stepsText = false;
+            }
+            if(stepsText == false)
+            {
+                yield return new WaitForSeconds(5f);
+                stepsText = true;
+            }
+        }
+
     }
+
 }
